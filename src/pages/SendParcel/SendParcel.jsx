@@ -2,9 +2,11 @@ import { useForm } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "./../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const SendParcel = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const serviceData = useLoaderData();
   const regions = [...new Set(serviceData.map((item) => item.region))];
 
@@ -90,8 +92,7 @@ const SendParcel = () => {
       .toString(36)
       .toUpperCase()}-${randomPart}`;
 
-
-    const payload = {
+    const parceldata = {
       ...data,
       delivery_cost: total,
       user_email: user?.email || "unknown",
@@ -103,22 +104,26 @@ const SendParcel = () => {
       payment_method: "Online Payment", // or "COD" if cash
     };
 
-    console.log("Proceeding to payment with parcel data:", payload);
+    console.log("Proceeding to payment with parcel data:", parceldata);
 
     // save data to the server
-
-
-    Swal.fire({
-      icon: "success",
-      title: "Redirecting to Payment",
-      text: "You will be redirected shortly...",
-      timer: 2000,
-      showConfirmButton: false,
+    axiosSecure.post("/parcels", parceldata).then((res) => {
+      console.log(res.data);
+      if (res.data.insertedId) {
+        // TODO: ➡️ Add your payment redirect logic here
+        Swal.fire({
+          icon: "success",
+          title: "Redirecting to Payment",
+          text: "You will be redirected shortly...",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
     });
 
-    reset(); // clear form
+    // reset(); // clear form
 
-    // ➡️ Add your payment redirect logic here
+
   };
 
   return (
