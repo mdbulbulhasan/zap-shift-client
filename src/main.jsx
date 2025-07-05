@@ -13,7 +13,7 @@ Aos.init();
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <div className="font-urbanist max-w-[85%] mx-auto bg-white">
+    <div className="font-urbanist bg-white">
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           {" "}

@@ -1,14 +1,23 @@
 import React from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import ProFastLogo from "../ProFastLogo/ProFastLogo";
 import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
+  const location = useLocation();
   const handleLogOut = () => {
     signOutUser()
       .then(() => {
         console.log("Signout user");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "You have been loggedout",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -22,13 +31,9 @@ const Navbar = () => {
       <li>
         <NavLink to="/coverage">Coverage</NavLink>
       </li>
-      {user ? (
-        <li>
-          <NavLink to="/sendparcel">Send Parcel</NavLink>
-        </li>
-      ) : (
-        ""
-      )}
+      <li>
+        <NavLink to="/sendparcel">Send Parcel</NavLink>
+      </li>
       {user && (
         <li>
           <NavLink to="/dashboard">Dashboard</NavLink>
@@ -40,7 +45,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar max-w-[85%] mx-auto ">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -74,17 +79,22 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         {user ? (
-          <button onClick={handleLogOut} className="btn">
+          <button
+            onClick={handleLogOut}
+            className="btn btn-primary text-accent"
+          >
             Logout
           </button>
         ) : (
           <>
-            <button className="btn mr-2">
-              <Link to="/login">Login</Link>
-            </button>
-            <button className="btn">
-              <Link to="/register">Register</Link>
-            </button>
+            <Link to="/login">
+              <button className="btn btn-primary text-accent mr-2">
+                Login
+              </button>
+            </Link>
+            <Link to="/register">
+              <button className="btn btn-primary text-accent">Register</button>
+            </Link>
           </>
         )}
       </div>

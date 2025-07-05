@@ -3,10 +3,12 @@ import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const { data: parcels = [], refetch } = useQuery({
     queryKey: ["my-parcels", user.email],
@@ -16,17 +18,18 @@ const MyParcels = () => {
     },
   });
 
-  const handleView = (parcel) => {
-    console.log("View Details:", parcel);
+  const handleView = (id) => {
+    console.log("View Details:", id);
     // Implement view modal or navigation
   };
 
-  const handlePay = (parcel) => {
-    console.log("Pay Parcel:", parcel);
+  const handlePay = (id) => {
+    console.log("Pay Parcel:", id);
     // Implement payment logic
+    navigate(`/dashboard/payment/${id}`);
   };
 
-  const handleDeleteClick = (parcel) => {
+  const handleDeleteClick = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "This parcel will be permanently deleted.",
@@ -38,7 +41,7 @@ const MyParcels = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await axiosSecure.delete(`/parcels/${parcel._id}`);
+          const res = await axiosSecure.delete(`/parcels/${id}`);
           if (res.data.deletedCount > 0) {
             refetch();
             Swal.fire({
@@ -109,19 +112,19 @@ const MyParcels = () => {
               {/* Actions */}
               <td className="flex gap-2">
                 <button
-                  onClick={() => handleView(parcel)}
+                  onClick={() => handleView(parcel._id)}
                   className="btn btn-sm btn-info"
                 >
                   View
                 </button>
                 <button
-                  onClick={() => handlePay(parcel)}
+                  onClick={() => handlePay(parcel._id)}
                   className="btn btn-sm btn-success"
                 >
                   Pay
                 </button>
                 <button
-                  onClick={() => handleDeleteClick(parcel)}
+                  onClick={() => handleDeleteClick(parcel._id)}
                   className="btn btn-sm btn-error"
                 >
                   Delete
