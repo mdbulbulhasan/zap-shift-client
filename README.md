@@ -17,4 +17,4 @@ VITE_authDomain=zap-shift-84fd9.firebaseapp.com
 VITE_projectId=zap-shift-84fd9
 VITE_storageBucket=zap-shift-84fd9.firebasestorage.app
 VITE_messagingSenderId=443429223697
-VITE_appId=1:443429223697:web:4ae2ea3f5e55adf2c020b
+VITE_appId=1:443429223697:web:4ae2ea3f5e55adf2c020b0

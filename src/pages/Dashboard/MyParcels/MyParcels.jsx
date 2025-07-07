@@ -120,9 +120,13 @@ const MyParcels = () => {
                 <button
                   onClick={() => handlePay(parcel._id)}
                   className="btn btn-sm btn-success"
+                  disabled={parcel.payment_status.toLowerCase() === "paid"}
                 >
-                  Pay
+                  {parcel.payment_status.toLowerCase() === "paid"
+                    ? "Paid"
+                    : "Pay"}
                 </button>
+
                 <button
                   onClick={() => handleDeleteClick(parcel._id)}
                   className="btn btn-sm btn-error"
