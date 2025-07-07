@@ -80,6 +80,7 @@ const PaymentForm = () => {
           // Step-4: mark parcel paid also create payment history
           const paymentData = {
             parcelId,
+            parcelType: parcelInfo.parcelType,
             email: user.email,
             amount,
             paymentMethod: result.paymentIntent.payment_method_types,

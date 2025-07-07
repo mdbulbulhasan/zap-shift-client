@@ -1,5 +1,13 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router";
+import { AiFillHome } from "react-icons/ai";
+import {
+  MdLocalShipping,
+  MdPayment,
+  MdTrackChanges,
+  MdEdit,
+} from "react-icons/md";
+
 import ProFastLogo from "../pages/Shared/ProFastLogo/ProFastLogo";
 
 const DashboardLayout = () => {
@@ -43,13 +51,31 @@ const DashboardLayout = () => {
           className="drawer-overlay"
         ></label>
         <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-          {/* Sidebar content here */}
-          <ProFastLogo></ProFastLogo>
+          <ProFastLogo />
           <li>
-            <NavLink>Home</NavLink>
+            <NavLink to="/dashboard">
+              <AiFillHome className="text-xl" /> Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to='/dashboard/myParcels'>My Parcels</NavLink>
+            <NavLink to="/dashboard/myParcels">
+              <MdLocalShipping className="text-xl" /> My Parcels
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/paymentHistory">
+              <MdPayment className="text-xl" /> Payment History
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/trackPackage">
+              <MdTrackChanges className="text-xl" /> Track Package
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/updateProfile">
+              <MdEdit className="text-xl" /> Update Profile
+            </NavLink>
           </li>
         </ul>
       </div>
