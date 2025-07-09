@@ -2,15 +2,36 @@ import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
+import useAxios from "../../../hooks/useAxios";
 
 const SocialLogin = () => {
   const { signInWithGoogle } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from || "/";
+  const axiosInstance = useAxios();
+  const updateLastLogin = async (email) => {
+    try {
+      const res = await axiosInstance.patch(`/users/${email}/last-login`);
+      console.log("Last login updated:", res.data);
+    } catch (error) {
+      console.error("Error updating last login:", error);
+    }
+  };
   const handleGoogleSignIn = () => {
     signInWithGoogle()
-      .then((result) => {
+      .then(async (result) => {
+        // update userinfo in the database
+        const userInfo = {
+          email: result.user.email,
+          role: "user", //default role
+          created_at: new Date().toISOString(),
+          last_log_in: new Date().toISOString(),
+        };
+        const res = await axiosInstance.post("/users", userInfo);
+        console.log("user update info from social login", res.data);
+        // ⬇️ Call updateLastLogin after user created and inserted
+        await updateLastLogin(result.user.email);
         if (result.user) {
           navigate(from);
           Swal.fire({
