@@ -12,6 +12,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import BeARider from "../pages/Dashboard/BeARider/BeARider";
 export const router = createBrowserRouter([
   // Root Layout
   {
@@ -27,6 +28,14 @@ export const router = createBrowserRouter([
         loader: () => fetch("./servicecenter.json"),
         Component: Coverage,
         hydrateFallbackElement: <Loading></Loading>,
+      },
+      {
+        path: "/beARider",
+        element: (
+          <PrivateRoute>
+            <BeARider></BeARider>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/sendparcel",
@@ -76,9 +85,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/paymentHistory",
         Component: PaymentHistory,
       },
-      {
-         
-      }
+      {},
     ],
   },
 ]);

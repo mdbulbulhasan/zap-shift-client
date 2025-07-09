@@ -1,12 +1,11 @@
 import React from "react";
-import { Link, NavLink, useLocation } from "react-router";
+import { Link, NavLink } from "react-router";
 import ProFastLogo from "../ProFastLogo/ProFastLogo";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
-  const location = useLocation();
   const handleLogOut = () => {
     signOutUser()
       .then(() => {
@@ -40,6 +39,9 @@ const Navbar = () => {
         </li>
       )}
       <li>
+        <NavLink to="/beARider">Be A Rider</NavLink>
+      </li>
+      <li>
         <NavLink to="/about">About</NavLink>
       </li>
     </>
@@ -72,7 +74,9 @@ const Navbar = () => {
             {navItems}
           </ul>
         </div>
-        <ProFastLogo></ProFastLogo>
+        <span className="btn btn-ghost text-xl">
+          <ProFastLogo></ProFastLogo>
+        </span>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
