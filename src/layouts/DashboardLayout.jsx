@@ -6,6 +6,8 @@ import {
   MdPayment,
   MdTrackChanges,
   MdEdit,
+  MdPeople,
+  MdPending,
 } from "react-icons/md";
 
 import ProFastLogo from "../pages/Shared/ProFastLogo/ProFastLogo";
@@ -75,6 +77,17 @@ const DashboardLayout = () => {
           <li>
             <NavLink to="/dashboard/updateProfile">
               <MdEdit className="text-xl" /> Update Profile
+            </NavLink>
+          </li>
+          {/* Riders Link */}
+          <li>
+            <NavLink to="/dashboard/activeRiders">
+              <MdPeople className="text-xl" /> Active Riders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/pendingRiders">
+              <MdPending className="text-xl" /> Pending Riders
             </NavLink>
           </li>
         </ul>

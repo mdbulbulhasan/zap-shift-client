@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
 
 const BeARider = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const [serviceCenters, setServiceCenters] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState("");
+  const serviceCenters = useLoaderData();
 
   const {
     register,
@@ -15,41 +17,38 @@ const BeARider = () => {
     formState: { errors },
   } = useForm();
 
-  // Load service centers
-  useEffect(() => {
-    fetch("/servicecenter.json")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch service centers");
-        return res.json();
-      })
-      .then((data) => setServiceCenters(data))
-      .catch((err) => console.error(err));
-  }, []);
-  
-
   const regions = [...new Set(serviceCenters.map((s) => s.region))];
   const districts = serviceCenters
     .filter((s) => s.region === selectedRegion)
     .map((s) => s.district);
 
   const onSubmit = async (data) => {
-    const applicationData = {
+    const riderapplicationData = {
       name: user?.displayName,
       email: user?.email,
       ...data,
       status: "pending",
-      appliedAt: new Date(),
+      create_At: new Date().toISOString(),
     };
 
-    console.log("Submitting rider application:", applicationData);
-
+    console.log("Submitting rider application:", riderapplicationData);
     try {
-      const res = await axiosSecure.post("/riders", applicationData);
-      console.log("Application submitted successfully:", res.data);
+      const res = await axiosSecure.post("/riders", riderapplicationData);
+        console.log("Application submitted successfully:", res.data.insertedId);
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Application Submitted",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       // Optionally reset form or show success toast
     } catch (error) {
       console.error("Failed to submit rider application:", error);
     }
+    
   };
 
   return (

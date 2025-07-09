@@ -13,6 +13,7 @@ import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import BeARider from "../pages/Dashboard/BeARider/BeARider";
+import PendingRider from "../pages/Dashboard/PendingRider/PendingRider";
 export const router = createBrowserRouter([
   // Root Layout
   {
@@ -36,6 +37,7 @@ export const router = createBrowserRouter([
             <BeARider></BeARider>
           </PrivateRoute>
         ),
+        loader: () => fetch("./servicecenter.json"),
       },
       {
         path: "/sendparcel",
@@ -85,7 +87,10 @@ export const router = createBrowserRouter([
         path: "/dashboard/paymentHistory",
         Component: PaymentHistory,
       },
-      {},
+      {
+        path: "/dashboard/pendingRiders",
+        Component: PendingRider
+      },
     ],
   },
 ]);
