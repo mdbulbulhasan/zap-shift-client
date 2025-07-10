@@ -14,6 +14,7 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import BeARider from "../pages/Dashboard/BeARider/BeARider";
 import PendingRider from "../pages/Dashboard/PendingRider/PendingRider";
+import ActiveRider from "../pages/Dashboard/ActiveRider/ActiveRider";
 export const router = createBrowserRouter([
   // Root Layout
   {
@@ -88,8 +89,12 @@ export const router = createBrowserRouter([
         Component: PaymentHistory,
       },
       {
+        path: "/dashboard/activeRiders",
+        Component: ActiveRider,
+      },
+      {
         path: "/dashboard/pendingRiders",
-        Component: PendingRider
+        Component: PendingRider,
       },
     ],
   },

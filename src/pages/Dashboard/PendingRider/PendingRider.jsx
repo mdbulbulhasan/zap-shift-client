@@ -22,7 +22,7 @@ const PendingRider = () => {
   // Approve mutation
   const approveMutation = useMutation({
     mutationFn: (riderId) =>
-      axiosSecure.patch(`/riders/${riderId}`, { status: "Accepted" }),
+      axiosSecure.patch(`/riders/${riderId}`, { status: "active" }),
     onSuccess: (_, riderId) => {
       queryClient.setQueryData(
         ["pendingRiders"],
@@ -36,7 +36,7 @@ const PendingRider = () => {
   // Reject mutation
   const rejectMutation = useMutation({
     mutationFn: (riderId) =>
-      axiosSecure.patch(`/riders/${riderId}`, { status: "Rejected" }),
+      axiosSecure.patch(`/riders/${riderId}`, { status: "inActive" }),
     onSuccess: (_, riderId) => {
       queryClient.setQueryData(
         ["pendingRiders"],
